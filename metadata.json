@@ -1,0 +1,5 @@
+{
+  "name": "Taipei UHI Tracker",
+  "description": "An interactive dashboard visualizing the Urban Heat Island effect in Taipei compared to global trends, featuring AI-powered climate analysis.",
+  "requestFramePermissions": []
+}
