@@ -5,7 +5,9 @@ import { analyzeClimateData } from './services/geminiService';
 import TemperatureChart from './components/TemperatureChart';
 import AnalysisPanel from './components/AnalysisPanel';
 import CitySelector from './components/CitySelector';
+import AboutDataPanel from './components/AboutDataPanel';
 import { ClimateDataPoint, CityConfig, AnalysisStatus, AIAnalysisResponse, Scenario } from './types';
+
 
 const App: React.FC = () => {
   // State
@@ -122,6 +124,9 @@ const App: React.FC = () => {
                     onAnalyze={handleRunAnalysis}
                 />
             </div>
+
+            {/* About Data Panel */}
+            <AboutDataPanel />
         </div>
 
       </main>
