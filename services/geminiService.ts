@@ -2,12 +2,35 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { ClimateDataPoint, AIAnalysisResponse, Scenario } from "../types";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+let ai: GoogleGenAI | null = null;
+
+const getAIClient = () => {
+    if (ai) return ai;
+    
+    const apiKey = process.env.API_KEY || process.env.GEMINI_API_KEY;
+    if (!apiKey) {
+        console.warn("Gemini API Key is missing");
+        return null;
+    }
+    
+    try {
+        ai = new GoogleGenAI({ apiKey });
+        return ai;
+    } catch (e) {
+        console.error("Failed to initialize Gemini Client", e);
+        return null;
+    }
+};
 
 export const analyzeClimateData = async (
   data: ClimateDataPoint[],
   scenario: Scenario
 ): Promise<AIAnalysisResponse> => {
+  const client = getAIClient();
+  if (!client) {
+      throw new Error("Gemini API Key is not configured. Please check your settings.");
+  }
+
   // Extract summary statistics
   const currentYearData = data.find(d => d.year === 2023) || data[data.length - 1];
   const startData = data[0];
